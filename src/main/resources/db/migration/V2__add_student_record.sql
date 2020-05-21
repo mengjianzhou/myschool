@@ -1,0 +1,2 @@
+INSERT INTO student(name, birthday, create_time) VALUES('张三', '2020-01-01 00:00:00', '2020-05-21 00:00:00');
+INSERT INTO student(name, birthday, create_time) VALUES('李四', '2020-01-02 00:00:00', '2020-05-21 00:00:00');

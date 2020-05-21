@@ -1,0 +1,13 @@
+server:
+  port: 9009
+
+spring:
+  datasource:
+    url: jdbc:mysql://39.106.128.18:3306/mybatistest?useSSL=false
+    username: mybatistest
+    password: Zb@123456
+
+  devtools:
+    restart:
+      # 设置热部署生效
+      enabled: true
