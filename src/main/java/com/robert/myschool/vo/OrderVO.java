@@ -1,6 +1,5 @@
 package com.robert.myschool.vo;
 
-import java.time.LocalDateTime;
 import lombok.Data;
 
 /**
@@ -9,17 +8,13 @@ import lombok.Data;
  * </p>
  *
  * @author robert zhao
- * @since 2020/5/21
+ * @since 2020/5/25
  */
 @Data
-public class StudentVO {
+public class OrderVO {
 
   private Integer id;
 
   private String name;
-
-  private String birthday;
-
-  private Integer batchQuantity;
 
 }

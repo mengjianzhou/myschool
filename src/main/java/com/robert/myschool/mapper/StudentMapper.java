@@ -2,6 +2,7 @@ package com.robert.myschool.mapper;
 
 import com.robert.myschool.entity.StudentEntity;
 import java.util.List;
+import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
@@ -18,4 +19,9 @@ public interface StudentMapper {
 
   @Select("select * from student")
   List<StudentEntity> getList();
+
+  @Insert("insert into student(name, birthday, create_time) values(#{name}, #{birthday}, sysdate())")
+  void add(StudentEntity studentVO);
+
+  void batchAdd(List<StudentEntity> list);
 }

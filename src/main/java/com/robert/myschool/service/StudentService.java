@@ -15,4 +15,9 @@ public interface StudentService {
 
   List<StudentVO> getList();
 
+  void add(StudentVO studentVO);
+
+  void batchAdd(StudentVO studentVO);
+
+  void batchAdd2(StudentVO studentVO);
 }

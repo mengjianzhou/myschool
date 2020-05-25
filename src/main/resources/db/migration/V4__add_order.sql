@@ -1,0 +1,1 @@
+INSERT INTO `order_info`(name) VALUES('apple');
