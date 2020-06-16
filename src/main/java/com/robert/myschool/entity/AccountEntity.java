@@ -10,16 +10,24 @@ import lombok.Data;
  * </p>
  *
  * @author robert zhao
- * @since 2020/5/25
+ * @since 2020/6/16
  */
 @Data
-@TableName("order_info")
-public class OrderEntity {
+@TableName("account_info")
+public class AccountEntity {
 
   private Integer id;
 
   private String name;
 
-  private BigDecimal amount;
+  private BigDecimal money;
+
+  private String address;
+
+  private String state;
+
+  private String date;
+
+  private String thumb;
 
 }

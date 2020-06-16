@@ -1,9 +1,11 @@
 package com.robert.myschool.controller;
 
+import com.robert.myschool.entity.StudentEntity;
 import com.robert.myschool.service.StudentService;
 import com.robert.myschool.vo.StudentVO;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;

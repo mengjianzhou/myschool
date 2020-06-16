@@ -1,7 +1,6 @@
 package com.robert.myschool.controller;
 
-import com.robert.myschool.vo.OrderVO;
-import java.util.List;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -14,12 +13,13 @@ import org.springframework.web.bind.annotation.RestController;
  * @since 2020/5/25
  */
 @RestController
-@RequestMapping("order")
-public class OrderController extends AbstractBaseController {
+@RequestMapping("data")
+public class RedisController {
 
-  @RequestMapping("list")
-  public List<OrderVO> getList(){
-    return orderService.getList();
+  @RequestMapping("t1")
+  @Cacheable("t1")
+  public String getData() {
+    return "hello redis";
   }
 
 }
