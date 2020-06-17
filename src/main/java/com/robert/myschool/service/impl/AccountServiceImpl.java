@@ -34,11 +34,10 @@ public class AccountServiceImpl extends ServiceImpl<AccountMapper, AccountEntity
     IPage resultPage = baseMapper.selectPage(page, null);
     List<AccountEntity> entityList = resultPage.getRecords();
     List<AccountVO> accountVOList = AccountConverter.convert2VOList(entityList);
-    Integer count = baseMapper.selectCount(null);
     Pager<AccountVO> resultPager = new Pager<>();
     resultPager.setPageIndex(pager.getPageIndex());
     resultPager.setPageSize(pager.getPageSize());
-    resultPager.setTotal(count);
+    resultPager.setTotal(resultPage.getTotal());
     resultPager.setList(accountVOList);
     return resultPager;
   }

@@ -17,7 +17,7 @@ public class Pager<T> implements Serializable {
 
   private Integer pageIndex;
   private Integer pageSize;
-  private Integer total;
+  private Long total;
   private Integer pages;
   private List<T> list;
 
