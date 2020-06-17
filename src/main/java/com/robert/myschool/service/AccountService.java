@@ -1,8 +1,7 @@
 package com.robert.myschool.service;
 
-import com.robert.myschool.entity.AccountEntity;
+import com.robert.myschool.utils.Pager;
 import com.robert.myschool.vo.AccountVO;
-import java.util.List;
 
 /**
  * <p>
@@ -14,7 +13,7 @@ import java.util.List;
  */
 public interface AccountService {
 
-  List<AccountEntity> getAccountList();
+  Pager<AccountVO> getAccountList(Pager pager);
 
   void addAccount(AccountVO accountVO);
 

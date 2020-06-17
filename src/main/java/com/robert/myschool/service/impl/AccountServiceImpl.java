@@ -1,10 +1,14 @@
 package com.robert.myschool.service.impl;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.robert.myschool.convert.AccountConverter;
 import com.robert.myschool.entity.AccountEntity;
 import com.robert.myschool.mapper.AccountMapper;
 import com.robert.myschool.service.AccountService;
 import com.robert.myschool.utils.DateUtil;
+import com.robert.myschool.utils.Pager;
 import com.robert.myschool.vo.AccountVO;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -23,8 +27,20 @@ public class AccountServiceImpl extends ServiceImpl<AccountMapper, AccountEntity
     AccountService {
 
   @Override
-  public List<AccountEntity> getAccountList() {
-    return baseMapper.selectList(null);
+  public Pager<AccountVO> getAccountList(Pager pager) {
+    Page<AccountEntity> page = new Page<>();
+    page.setCurrent(pager.getPageIndex());
+    page.setSize(pager.getPageSize());
+    IPage resultPage = baseMapper.selectPage(page, null);
+    List<AccountEntity> entityList = resultPage.getRecords();
+    List<AccountVO> accountVOList = AccountConverter.convert2VOList(entityList);
+    Integer count = baseMapper.selectCount(null);
+    Pager<AccountVO> resultPager = new Pager<>();
+    resultPager.setPageIndex(pager.getPageIndex());
+    resultPager.setPageSize(pager.getPageSize());
+    resultPager.setTotal(count);
+    resultPager.setList(accountVOList);
+    return resultPager;
   }
 
   @Override

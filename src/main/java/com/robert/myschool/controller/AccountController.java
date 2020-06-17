@@ -4,6 +4,7 @@ import com.robert.myschool.common.Result;
 import com.robert.myschool.convert.AccountConverter;
 import com.robert.myschool.entity.AccountEntity;
 import com.robert.myschool.service.AccountService;
+import com.robert.myschool.utils.Pager;
 import com.robert.myschool.vo.AccountVO;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
@@ -32,10 +33,9 @@ public class AccountController {
   private AccountService accountService;
 
   @GetMapping("page")
-  public Result<List<AccountVO>> getAccountPage() {
-    List<AccountEntity> entityList = accountService.getAccountList();
-    List<AccountVO> accountVOList = AccountConverter.convert2VOList(entityList);
-    return new Result<>(accountVOList);
+  public Result<Pager<AccountVO>> getAccountPage(Pager pager) {
+    Pager<AccountVO> resultPager = accountService.getAccountList(pager);
+    return new Result<>(resultPager);
   }
 
   @PostMapping
