@@ -6,9 +6,14 @@ import com.robert.myschool.entity.AccountEntity;
 import com.robert.myschool.service.AccountService;
 import com.robert.myschool.vo.AccountVO;
 import java.util.List;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -31,6 +36,24 @@ public class AccountController {
     List<AccountEntity> entityList = accountService.getAccountList();
     List<AccountVO> accountVOList = AccountConverter.convert2VOList(entityList);
     return new Result<>(accountVOList);
+  }
+
+  @PostMapping
+  public Result<Boolean> addAccount(@RequestBody AccountVO accountVO) {
+    accountService.addAccount(accountVO);
+    return new Result<>(Boolean.TRUE);
+  }
+
+  @PostMapping("/delete/{id}")
+  public Result<Boolean> deleteAccount(@PathVariable("id") Integer id) {
+    accountService.deleteAccount(id);
+    return new Result<>(Boolean.TRUE);
+  }
+
+  @PostMapping("/update")
+  public Result<Boolean> updateAccount(@RequestBody AccountVO accountVO) {
+    accountService.updateAccount(accountVO);
+    return new Result<>(Boolean.TRUE);
   }
 
 }

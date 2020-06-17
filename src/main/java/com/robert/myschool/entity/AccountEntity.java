@@ -1,5 +1,7 @@
 package com.robert.myschool.entity;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import java.math.BigDecimal;
 import lombok.Data;
@@ -16,6 +18,7 @@ import lombok.Data;
 @TableName("account_info")
 public class AccountEntity {
 
+  @TableId(value="id",type= IdType.AUTO)
   private Integer id;
 
   private String name;
