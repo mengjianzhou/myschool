@@ -6,6 +6,7 @@ import com.robert.myschool.utils.Pager;
 import com.robert.myschool.vo.ProductVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -35,6 +36,18 @@ public class ProductController {
   @PostMapping
   public Result<Boolean> addProduct(@RequestBody ProductVO productVO) {
     productService.addProduct(productVO);
+    return new Result<>(Boolean.TRUE);
+  }
+
+  @PostMapping("/delete/{id}")
+  public Result<Boolean> deleteProduct(@PathVariable("id") Integer id) {
+    productService.deleteProduct(id);
+    return new Result<>(Boolean.TRUE);
+  }
+
+  @PostMapping("/update")
+  public Result<Boolean> updateProduct(@RequestBody ProductVO productVO) {
+    productService.updateProduct(productVO);
     return new Result<>(Boolean.TRUE);
   }
 

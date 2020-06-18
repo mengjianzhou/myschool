@@ -28,6 +28,7 @@ public class ProductServiceImpl extends ServiceImpl<ProductMapper, ProductEntity
   public void addProduct(ProductVO productVO) {
     ProductEntity productEntity = new ProductEntity();
     BeanUtils.copyProperties(productVO, productEntity);
+    productEntity.setPic("http://pic.51yuansu.com/pic3/cover/03/85/66/5c11e1fa1ac16_610.jpg");
     baseMapper.insert(productEntity);
   }
 
@@ -41,6 +42,18 @@ public class ProductServiceImpl extends ServiceImpl<ProductMapper, ProductEntity
     pager.setList(productVOList);
     pager.setTotal(productEntityIPager.getTotal());
     return pager;
+  }
+
+  @Override
+  public void deleteProduct(Integer id) {
+    baseMapper.deleteById(id);
+  }
+
+  @Override
+  public void updateProduct(ProductVO productVO) {
+    ProductEntity productEntity = new ProductEntity();
+    BeanUtils.copyProperties(productVO, productEntity);
+    baseMapper.updateById(productEntity);
   }
 
 }

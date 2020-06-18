@@ -33,4 +33,6 @@ public class ProductEntity {
 
   private Integer stockQuantity;
 
+  private String pic;
+
 }

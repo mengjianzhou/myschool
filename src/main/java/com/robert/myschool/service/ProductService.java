@@ -17,4 +17,8 @@ public interface ProductService {
 
   Pager<ProductVO> getList(Pager pager);
 
+  void deleteProduct(Integer id);
+
+  void updateProduct(ProductVO productVO);
+
 }

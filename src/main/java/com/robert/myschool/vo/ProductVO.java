@@ -28,4 +28,6 @@ public class ProductVO {
 
   private Integer stockQuantity;
 
+  private String pic;
+
 }
