@@ -18,12 +18,23 @@ public class MenuVO {
 
   private Integer parentId;
 
+  public Integer getParentId() {
+    if (parentId == null) {
+      parentId = 0;
+    }
+    return parentId;
+  }
+
   private String title;
 
   private String index;
 
   private String icon;
 
+  private Integer level;
+
   private List<MenuVO> subs;
+
+  private boolean leafFlag;
 
 }

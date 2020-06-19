@@ -29,8 +29,13 @@ public class MenuEntity {
   @TableField("path")
   private String path;
 
+  private Integer level;
+
   private String icon;
 
   private transient List<MenuEntity> subs;
+
+  private transient boolean leafFlag;
+
 
 }
