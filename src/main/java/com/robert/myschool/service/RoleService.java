@@ -2,6 +2,7 @@ package com.robert.myschool.service;
 
 import com.robert.myschool.utils.Pager;
 import com.robert.myschool.vo.RoleVO;
+import java.util.List;
 
 /**
  * <p>
@@ -20,4 +21,6 @@ public interface RoleService {
   void update(RoleVO roleVO);
 
   void deleteById(Integer id);
+
+  List<RoleVO> getRoleList();
 }

@@ -21,4 +21,5 @@ public interface UserService {
 
   void deleteById(Integer id);
 
+  void updateUserRole(UserVO userVO);
 }

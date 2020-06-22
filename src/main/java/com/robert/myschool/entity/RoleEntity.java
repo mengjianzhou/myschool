@@ -22,4 +22,6 @@ public class RoleEntity {
 
   private String name;
 
+  private String description;
+
 }

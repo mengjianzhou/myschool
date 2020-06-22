@@ -4,6 +4,7 @@ import com.robert.myschool.common.Result;
 import com.robert.myschool.service.RoleService;
 import com.robert.myschool.utils.Pager;
 import com.robert.myschool.vo.RoleVO;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -31,6 +32,12 @@ public class RoleController {
   public Result<Pager<RoleVO>> getRolePager(Pager pager) {
     Pager<RoleVO> resultPager = roleService.getRolePager(pager);
     return new Result<>(resultPager);
+  }
+
+  @GetMapping("list")
+  public Result<List<RoleVO>> getRoleList() {
+    List<RoleVO> roleVOList = roleService.getRoleList();
+    return new Result<>(roleVOList);
   }
 
   @PostMapping

@@ -55,6 +55,14 @@ public class UserServiceImp extends ServiceImpl<UserMapper, UserEntity> implemen
     baseMapper.deleteById(id);
   }
 
+  @Override
+  public void updateUserRole(UserVO userVO) {
+    UserEntity userEntity = new UserEntity();
+    userEntity.setId(userVO.getId());
+    userEntity.setRole(userVO.getRole());
+    baseMapper.updateById(userEntity);
+  }
+
   private List<UserVO> convert2VOList(List<UserEntity> userEntityList) {
     List<UserVO> userVOList = new ArrayList<>();
     for (UserEntity entity : userEntityList) {

@@ -51,4 +51,10 @@ public class UserController {
     return new Result<>(Boolean.TRUE);
   }
 
+  @PostMapping("updateRole")
+  public Result<Boolean> updateUserRole(@RequestBody UserVO userVO) {
+    userService.updateUserRole(userVO);
+    return new Result<>(Boolean.TRUE);
+  }
+
 }

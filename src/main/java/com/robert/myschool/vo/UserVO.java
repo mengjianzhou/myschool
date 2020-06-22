@@ -1,5 +1,6 @@
 package com.robert.myschool.vo;
 
+import java.util.List;
 import lombok.Data;
 
 /**
@@ -18,5 +19,7 @@ public class UserVO {
   private String username;
 
   private String password;
+
+  private String role;
 
 }

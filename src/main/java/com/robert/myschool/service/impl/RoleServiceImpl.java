@@ -54,6 +54,12 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, RoleEntity> impleme
     baseMapper.deleteById(id);
   }
 
+  @Override
+  public List<RoleVO> getRoleList() {
+    List<RoleEntity> roleEntityList =  baseMapper.selectList(null);
+    return convert2VOList(roleEntityList);
+  }
+
   private List<RoleVO> convert2VOList(List<RoleEntity> records) {
     List<RoleVO> roleVOList = new ArrayList<>();
     for (RoleEntity roleEntity : records) {
