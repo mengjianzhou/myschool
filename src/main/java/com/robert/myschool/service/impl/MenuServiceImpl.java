@@ -14,7 +14,6 @@ import com.robert.myschool.vo.MenuVO;
 import com.robert.myschool.vo.MenuViewVO;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -37,8 +36,9 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, MenuEntity> impleme
   @Override
   public MenuViewVO getMenuView() {
     List<MenuEntity> menuEntityList = baseMapper.selectList(null);
-    List<MenuEntity> resultEntityList = setSubMenuEntityList(0, menuEntityList, 1);
-    List<MenuVO> menuViewVOList = convert2MenuVOList(resultEntityList);
+    List<MenuEntity> rootList = getByParentId(menuEntityList, 0);
+    setSubMenuEntityList(rootList, menuEntityList);
+    List<MenuVO> menuViewVOList = convert2MenuVOList(rootList);
     MenuViewVO menuViewVO = new MenuViewVO();
     menuViewVO.setItems(menuViewVOList);
     DictEntity dictEntity = new DictEntity();
@@ -47,6 +47,13 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, MenuEntity> impleme
     String collapse = dictService.getDictValue(dictEntity);
     menuViewVO.setCollapse(Boolean.parseBoolean(collapse));
     return menuViewVO;
+  }
+
+  private void setSubMenuEntityList(List<MenuEntity> rootList, List<MenuEntity> menuEntityList) {
+    for (MenuEntity menuEntity : rootList) {
+      List<MenuEntity> subs = getByParentId(menuEntityList, menuEntity.getId());
+      menuEntity.setSubs(subs);
+    }
   }
 
   @Override
@@ -64,7 +71,7 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, MenuEntity> impleme
     setLeafFlag(0, allMenuEntityList, 1);
     for (MenuEntity menuEntity : menuEntityList) {
       for (MenuEntity entity : allMenuEntityList) {
-        if(menuEntity.getId().equals(entity.getId())){
+        if (menuEntity.getId().equals(entity.getId())) {
           menuEntity.setLeafFlag(entity.isLeafFlag());
         }
       }
@@ -113,17 +120,17 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, MenuEntity> impleme
   }
 
 
-  public List<MenuEntity> setSubMenuEntityList(Integer parentId, List<MenuEntity> menuEntityList,
-      Integer level) {
-    List<MenuEntity> levelList = new ArrayList<>();
+
+  public List<MenuEntity> getByParentId(List<MenuEntity> menuEntityList, Integer parentId) {
+    List<MenuEntity> resultList = new ArrayList<>();
     for (MenuEntity menuEntity : menuEntityList) {
-      if (level == menuEntity.getLevel() && menuEntity.getParentId() == parentId) {
-        levelList.add(menuEntity);
-//        menuEntity.setSubs(setSubMenuEntityList(menuEntity.getId(), menuEntityList, level + 1));
+      if (menuEntity.getParentId().equals(parentId)) {
+        resultList.add(menuEntity);
       }
     }
-    return levelList;
+    return resultList;
   }
+
 
   private void setLeafFlag(Integer parentId, List<MenuEntity> menuEntityList, Integer level) {
     for (MenuEntity menuEntity : menuEntityList) {
