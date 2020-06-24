@@ -13,4 +13,5 @@ import com.robert.myschool.vo.UserVO;
 public interface LoginService {
 
   Boolean doLogin(UserVO userVO);
+
 }

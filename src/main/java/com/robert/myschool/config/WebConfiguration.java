@@ -15,6 +15,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 /**
  * <p>
@@ -26,10 +28,20 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
  */
 @Configuration
 @EnableWebMvc
-public class WebConfiguration{
+public class WebConfiguration implements WebMvcConfigurer {
 
   private static final String DATE_TIME_PATTERN = "yyyy-MM-dd HH:mm:ss";
   private static final String DATE_PATTERN = "yyyy-MM-dd";
+
+  @Override
+  public void addResourceHandlers(ResourceHandlerRegistry registry) {
+    registry.addResourceHandler("/**").addResourceLocations(
+        "classpath:/static/");
+    registry.addResourceHandler("/swagger-ui.html").addResourceLocations(
+        "classpath:/META-INF/resources/");
+    registry.addResourceHandler("/webjars/**").addResourceLocations(
+        "classpath:/META-INF/resources/webjars/");
+  }
 
   @Bean
   public Converter<String, LocalDateTime> localDateTimeConverter() {
