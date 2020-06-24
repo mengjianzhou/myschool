@@ -1,7 +1,9 @@
 package com.robert.myschool.service;
 
+import com.robert.myschool.entity.AccountEntity;
 import com.robert.myschool.utils.Pager;
 import com.robert.myschool.vo.AccountVO;
+import java.util.List;
 
 /**
  * <p>
@@ -20,4 +22,6 @@ public interface AccountService {
   void deleteAccount(Integer id);
 
   void updateAccount(AccountVO accountVO);
+
+  List<AccountEntity> getAccountList();
 }

@@ -68,4 +68,9 @@ public class AccountServiceImpl extends ServiceImpl<AccountMapper, AccountEntity
     baseMapper.updateById(accountEntity);
   }
 
+  @Override
+  public List<AccountEntity> getAccountList() {
+    return baseMapper.selectList(null);
+  }
+
 }

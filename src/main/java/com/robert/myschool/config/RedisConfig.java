@@ -1,22 +1,19 @@
 package com.robert.myschool.config;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import java.lang.reflect.Method;
-import java.time.Duration;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.cache.CacheProperties.Redis;
 import org.springframework.cache.annotation.CachingConfigurerSupport;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.cache.interceptor.KeyGenerator;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.data.redis.connection.RedisConfiguration;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
-import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
-import org.springframework.data.redis.connection.lettuce.LettuceClientConfiguration;
-import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
-import org.springframework.data.redis.connection.lettuce.LettucePoolingClientConfiguration;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.serializer.StringRedisSerializer;
+import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer;
+import org.springframework.data.redis.serializer.RedisSerializer;
 
 /**
  * <p>
@@ -30,29 +27,39 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 @EnableCaching
 public class RedisConfig extends CachingConfigurerSupport {
 
-//  @Autowired
-//  private RedisConnectionFactory redisConnectionFactory;
-//
-//  @Bean
-//  public RedisConnectionFactory redisConnectionFactory() {
-//    RedisConfiguration redisConfiguration = new
-//        RedisStandaloneConfiguration("127.0.0.1", 6379);
-//    ((RedisStandaloneConfiguration) redisConfiguration).setDatabase(1);
-//
-//    //根据配置和客户端配置创建连接
-//    LettuceConnectionFactory lettuceConnectionFactory = new
-//        LettuceConnectionFactory(redisConfiguration);
-//    lettuceConnectionFactory.afterPropertiesSet();
-//
-//    return lettuceConnectionFactory;
-//  }
-//
-//  @Bean
-//  public RedisTemplate redisTemplate(RedisConnectionFactory redisConnectionFactory) {
-//    RedisTemplate<String, String> redisTemplate = new RedisTemplate<>();
-//    redisTemplate.setKeySerializer(new StringRedisSerializer());
-//    return redisTemplate;
-//  }
+  @Bean
+  public <T> RedisTemplate<String, T> redisTemplate(RedisConnectionFactory redisConnectionFactory) {
+    ObjectMapper mapper = new ObjectMapper();
+    mapper.registerModule(new Jdk8Module());
+    mapper.registerModule(new JavaTimeModule());
+
+    GenericJackson2JsonRedisSerializer genericJackson2JsonRedisSerializer =
+        new GenericJackson2JsonRedisSerializer(mapper);
+
+    RedisTemplate<String, T> redisTemplate = new RedisTemplate<>();
+    redisTemplate.setConnectionFactory(redisConnectionFactory);
+    redisTemplate.setKeySerializer(RedisSerializer.string());
+    redisTemplate.setValueSerializer(genericJackson2JsonRedisSerializer);
+    redisTemplate.setHashKeySerializer(RedisSerializer.string());
+    redisTemplate.setHashValueSerializer(genericJackson2JsonRedisSerializer);
+    return redisTemplate;
+  }
+
+  @Bean
+  public RedisTemplate redisTemplate2(RedisConnectionFactory redisConnectionFactory) {
+    ObjectMapper mapper = new ObjectMapper();
+    mapper.registerModule(new Jdk8Module());
+    mapper.registerModule(new JavaTimeModule());
+
+    GenericJackson2JsonRedisSerializer genericJackson2JsonRedisSerializer =
+        new GenericJackson2JsonRedisSerializer(mapper);
+
+    StringRedisTemplate redisTemplate = new StringRedisTemplate();
+    redisTemplate.setValueSerializer(genericJackson2JsonRedisSerializer);
+    redisTemplate.setConnectionFactory(redisConnectionFactory);
+    return redisTemplate;
+  }
+
 
   @Bean
   @Override
